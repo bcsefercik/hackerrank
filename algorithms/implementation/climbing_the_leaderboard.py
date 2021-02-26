@@ -5,6 +5,7 @@ import os
 import random
 import re
 import sys
+import bisect
 
 #
 # Complete the 'climbingLeaderboard' function below.
@@ -17,10 +18,11 @@ import sys
 
 
 def climbingLeaderboard(ranked, player):
-    ranked = set(ranked)
+    ranked = list(set(ranked))
+    ranked.sort()
 
     def finder(ranked, number):
-        return len([r for r in ranked if r > number]) + 1
+        return len(ranked) + 1 - bisect.bisect(ranked, number)
 
     # Write your code here
     return [finder(ranked, pp) for pp in player]
